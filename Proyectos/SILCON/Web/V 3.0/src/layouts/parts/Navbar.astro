@@ -1,0 +1,61 @@
+---
+import { Image } from "astro:assets";
+import LogoSilcon from "../../assets/logo/logo.png";
+
+const links = [
+	{ name: "Inicio", href: "/" },
+	{ name: "Productos", href: "/products" },
+	{ name: "Descargas", href: "/downloads" },
+	{ name: "Contacto", href: "/contact" },
+];
+---
+
+<div class="pb-5 m-auto flex justify-between items-center">
+	<!-- Logo -->
+	<div id="logo">
+		<a href="index.html">
+			<Image src={LogoSilcon} alt="Logo Silcon" width="200" />
+		</a>
+	</div>
+
+	<!-- Options Menu -->
+	<ul id="menu" class="flex">
+		{
+			links.map((link) => (
+				<li class="p-3 uppercase text-sm nav-item flex flex-col">
+					<a href={link.href} class="nav-link">
+						{link.name}
+					</a>
+					<span class="algo" />
+				</li>
+			))
+		}
+	</ul>
+</div>
+
+<style>
+	.nav-item:after {
+		background: none repeat scroll 0 0 transparent;
+		content: "";
+		display: block;
+		height: 1px;
+		margin-top: 1px;
+		left: 30%;
+		background-color: goldenrod;
+		transition:
+			width 0.3s ease 0s,
+			left 0.3s ease 0s;
+		width: 0;
+	}
+
+	.nav-item:hover::after {
+		width: 100%;
+		left: 0;
+	}
+
+	.nav-link,
+	.nav-link:hover {
+		text-decoration: none;
+		color: black;
+	}
+</style>

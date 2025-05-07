@@ -1,0 +1,286 @@
+{
+  "Placas":[ 
+     {
+      "id": "1",
+      "type": "placa_economica",
+      "name": "Módulo SLC10",
+      "in_outs": "10",
+      "wiring": [
+        {
+          "unique": "Hasta 8 paradas maniobra simple y puertas manuales, hasta 5 paradas maniobra descenso puertas manuales, hasta 4 paradas maniobra descenso puertas automáticas, etc.",
+          "group": "Hasta 8 paradas maniobra ascenso/descenso puertas automáticas."
+        }
+      ],
+      "description": "Todos los accionamientos: 1 velocidad, 2 velocidades, hidráulico, frecuencia variable. Más de 30 códigos de falla almacenables. Cancelación de llamadas falsas.",
+      "notes": "En grupo se conecta al DPC mediante interfaz INTZ DPC/UCAB.",
+      "programing": "PRG-04"
+    },
+    {
+      "id": "2",
+      "type": "placa_economica",
+      "name": "Módulo SLC80",
+      "in_outs": "28",
+      "wiring": [
+        {
+          "unique": "Hasta 24 paradas maniobra simple y puertas manuales, hasta 13 paradas maniobra descenso puertas manuales, hasta 12 paradas maniobra descenso puertas automáticas, etc.",
+          "group": "Hasta 24 paradas maniobra ascenso/descenso puertas automáticas."
+        }
+      ],
+      "description": "Todos los accionamientos: 1 velocidad, 2 velocidades, hidráulico, frecuencia variable. Más de 30 códigos de falla almacenables. Cancelación de llamadas falsas.",
+      "notes": "En grupo se conecta al DPC mediante interfaz INTZ DPC/UCAB.",
+      "programing": "PRG-04"
+    },
+   {
+      "id": "3",
+      "type": "placa_superior",
+      "name": "Módulo SLC20",
+      "in_outs": "10",
+      "wiring": [
+        {
+          "type": "Standard",
+          "unique": "Hasta 8 paradas maniobra simple y puertas manuales, hasta 5 paradas maniobra descenso puertas manuales, hasta 4 paradas maniobra descenso puertas automáticas, etc.",
+          "group": "Hasta 8 paradas maniobra ascenso/descenso puertas automáticas."
+        },
+        {
+          "type": "Serial",
+          "unique": "Hasta 8 paradas descenso puertas automáticas.",
+          "group": "Hasta 40 paradas maniobra ascenso/descenso puertas automáticas."
+        }
+      ],
+      "description": "Todos los accionamientos: 1 velocidad, 2 velocidades, hidráulico, frecuencia variable. Más de 30 códigos de falla almacenables. Cancelación de llamadas falsas.",
+      "notes": "En grupo se conecta al DPC mediante interfaz INTZ DPC/UCAB.",
+      "programing": "PRG-04"
+    },
+    {
+      "id": "4",
+      "type": "placa_superior",
+      "name": "Módulo SLC100",
+      "in_outs": "28",
+      "wiring": [
+        {
+          "type": "Standard",
+          "unique": "Hasta 24 paradas maniobra simple y puertas manuales, hasta 13 paradas maniobra descenso puertas manuales, hasta 12 paradas maniobra descenso puertas automáticas, etc.",
+          "group": "Hasta 24 paradas maniobra ascenso/descenso puertas automáticas."
+        },
+        {
+          "type": "Serial",
+          "unique": "Hasta 24 paradas maniobra descenso. Hasta 12 paradas ascenso/descenso.",
+          "group": "Hasta 40 paradas maniobra ascenso/descenso puertas automáticas. Todos los accionamientos: 1 velocidad, 2 velocidades, hidráulico, frecuencia variable. Más de 30 códigos de falla almacenables. Cancelación de llamadas falsas."
+        }
+      ],
+      "description": "Todos los accionamientos: 1 velocidad, 2 velocidades, hidráulico, frecuencia variable. Más de 30 códigos de falla almacenables. Cancelación de llamadas falsas.",
+      "notes": "",
+      "programing": "Por teclado incorporado."
+    },
+    {
+      "id": "5",
+      "type": "placa_superior",
+      "name": "Módulo SLC100",
+      "in_outs": "60",
+      "wiring": [
+        {
+          "type": "Standard",
+          "unique": "Hasta 29 paradas maniobra descenso puertas manuales, hasta 28 paradas maniobra descenso puertas automáticas, hasta 17 paradas maniobra ascenso-descenso puertas automáticas, etc.",
+          "group": "Hasta 40 paradas maniobra ascenso/descenso puertas automáticas."
+        },
+        {
+          "type": "Serial",
+          "unique": "Hasta 40 paradas maniobra descenso. Hasta 28 paradas ascenso/descenso.",
+          "group": "Hasta 40 paradas maniobra ascenso/descenso puertas automáticas. Todos los accionamientos: 1 velocidad, 2 velocidades, hidráulico, frecuencia variable. Más de 30 códigos de falla almacenables. Cancelación de llamadas falsas."
+        }
+      ],
+      "description": "Todos los accionamientos: 1 velocidad, 2 velocidades, hidráulico, frecuencia variable. Más de 30 códigos de falla almacenables. Cancelación de llamadas falsas.",
+      "notes": "",
+      "programing": "Por teclado incorporado"
+    }],
+"algo":[
+    {
+      "id": "6",
+      "type": "ucab",
+      "name": "Unidad serie para cabina",
+      "paradas": [
+        {
+          "cant": "Hasta 10 paradas",
+          "description": "Para los módulos SLC20-100/S. Todas las funciones de cabina son enviadas por comunicación serie al módulo SLC en el tablero de control. Comanda operador de puertas, luz y extractor de aire de cabina."
+        },
+        {
+          "cant": "Más de 10 paradas",
+          "description": "Para los módulos SLC20-100/S. Todas las funciones de cabina son enviadas por comunicación serie al módulo SLC en el tablero de control. Comanda doble operador de puertas independientes, luz y extractor de aire de cabina. Permite borrado de llamadas presionadas por error."
+        }
+      ]
+    },
+      {
+      "id": "7",
+      "type": "despacho",
+      "name": "Despacho DPC-3",
+      "description": "Hasta 32 paradas maniobra descenso, hasta 32 paradas maniobra ascenso/descenso. Conecta hasta 4 ascensores en grupo. Más de 30 códigos de falla almacenables.",
+      "notes": "Para grupo full dinámico.",
+      "programing": "PRG-04"
+    },
+    {
+      "id": "8",
+      "type": "despacho",
+      "name": "Despacho DPC-4",
+      "description": "Hasta 40 paradas maniobra descenso, hasta 32 paradas maniobra ascenso/descenso. Conecta hasta 4 ascensores en grupo. Más de 30 códigos de falla almacenables.",
+      "notes": "Para grupo full dinámico.",
+      "programing": "Por teclado incorporado"
+    }],
+     "Programadores":[ {
+      "id": "9",
+      "type": "programador",
+      "name": "Programador PRG-04",
+      "carcasa": "Plástica",
+      "description": "Para todos los módulos SLC20"
+    },
+    {
+      "id": "10",
+      "type": "programador",
+      "name": "Programador PRG-04",
+      "carcasa": "Metálica",
+      "description": "Para todos los módulos SLC20"
+    }],
+    "Displays":[
+      {
+      "id": "11",
+      "type": "display",
+      "name": "Display matriz de puntos rojos",
+      "description": "Para todos los módulos SLC",
+      "size": "40 x 70 mm",
+      "color": [
+        "Rojo",
+        "Azul"
+      ]
+    },
+    {
+      "id": "12",
+      "type": "display",
+      "name": "Display matriz de puntos rojos",
+      "description": "Para todos los módulos SLC",
+      "size": "18 x 40 mm",
+      "color": [
+        "Rojo"
+      ]
+    },
+    {
+      "id": "13",
+      "type": "display",
+      "name": "Display matriz de leds rojo",
+      "description": "Para todos los módulos SLC",
+      "size": "100 x 40 mm",
+      "color": [
+        "Rojo"
+      ]
+    },
+    {
+      "id": "14",
+      "type": "display",
+      "name": "Display matriz de leds",
+      "description": "Para todos los módulos SLC",
+      "size": "150 x 60 mm",
+      "color": [
+        "Blanco",
+        "Rojo",
+        "Azul",
+        "Amarillo"
+      ]
+    },
+    {
+      "id": "15",
+      "type": "display",
+      "name": "Display QUAD",
+      "description": "Para todos los módulos SLC",
+      "size": "60 x 65mm",
+      "color": [
+        "Rojo"
+      ]
+    },
+    {
+      "id": "16",
+      "type": "display",
+      "name": "Display pantalla color 5”",
+      "description": "Para todos los módulos SLC",
+      "size": "116 x 87 mm",
+      "color": ""
+    },
+    {
+      "id": "17",
+      "type": "display",
+      "name": "Display pantalla color 7”",
+      "description": "Para todos los módulos SLC",
+      "size": "155 x 86 mm",
+      "color": "Pantalla a color"
+    }],
+    "algo2":[  {
+      "id": "18",
+      "type": "interfaz",
+      "name": "INTZ DPC-UCAB",
+      "description": "Para todos los módulos SLC. Permite conectar los módulos SLC al DPC para trabajar en grupo de ascensores."
+    },
+    {
+      "id": "19",
+      "type": "interfaz",
+      "name": "Interfaz para display VEGA",
+      "description": "Para todos los módulos SLC. Permite conectar los display marca VEGA directamente a los módulos SLC."
+    },
+      {
+      "id": "20",
+      "type": "fuente",
+      "name": "Fuente 12 (o 24) VCC",
+      "description": "Para todos los módulos SLC.",
+      "notes": "No incluye transformador."
+    },
+      {
+      "id": "21",
+      "type": "placa_escalera",
+      "name": "Módulo SLC10",
+      "description": ""
+    }],
+    "Tableros":[{
+      "id": "22",
+      "type": "placa_escalera",
+      "name": "Tablero para escalera mecánica",
+      "description": ""
+    },
+      {
+      "id": "23",
+      "type": "tablero",
+      "name": "Tablero una velociad",
+      "description": ""
+    },
+    {
+      "id": "24",
+      "type": "tablero",
+      "name": "Tablero dos velocidades",
+      "description": ""
+    },
+    {
+      "id": "25",
+      "type": "tablero",
+      "name": "Tablero hidráulico",
+      "description": ""
+    },
+    {
+      "id": "26",
+      "type": "tablero",
+      "name": "Tablero frecuencia variable modelo E",
+      "description": ""
+    },
+    {
+      "id": "27",
+      "name": "Tablero frecuencia variable modelo Y",
+      "description": ""
+    }],
+    "Accesorios":[
+      {
+      "id": "28",
+      "type": "accesorios",
+      "name": "Sintetizador de voz",
+      "description": "Para todos los módulos SLC"
+    },
+    {
+      "id": "29",
+      "type": "accesorios",
+      "name": "Sensor magnético",
+      "description": "Para todos los módulos SLC"
+    }]
+  }

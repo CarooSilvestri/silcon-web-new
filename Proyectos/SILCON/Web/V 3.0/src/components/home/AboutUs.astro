@@ -1,0 +1,53 @@
+---
+import Image from "astro/components/Image.astro";
+import Slc100 from "../../assets/Módulo SLC100 - 4.jpg";
+---
+
+<section class="py-20 px-6 md:px-20">
+	<div class="grid grid-cols-1 md:grid-cols-3 gap-25 items-center">
+		<!-- Imágenes -->
+		<div class="flex gap-4 justify-center md:justify-start">
+			<Image
+				src={Slc100}
+				alt="Imagen 1"
+				class="w-40 mb-10 h-100 object-cover"
+			/>
+			<Image
+				src={Slc100}
+				alt="Imagen 2"
+				class="w-40 mt-10 md:w-44 object-cover"
+			/>
+		</div>
+
+		<!-- Texto -->
+		<div class="md:col-span-2">
+			<p class="uppercase font-semibold text-sm mb-2">Sobre nosotros</p>
+			<h1
+				class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
+				La innovación nos motiva
+			</h1>
+			<p>
+				Somos una empresa argentina dedicada exclusivamente al desarrollo y
+				fabricación de componentes electrónicos para su aplicación en
+				ascensores.
+			</p>
+			<p>
+				Nuestro equipo de desarrollo cuenta con una amplia experiencia en
+				mantenimiento y service de equipos de alta tecnología, experiencia que
+				ha sido volcada en el desarrollo de nuestros nuevos productos, siempre
+				con el objetivo fundamental de simplificar la tarea de detección de
+				fallas en los distintos componentes del ascensor durante la atención de
+				reclamos o al realizar tareas de mantenimiento, apuntando a mantener los
+				ascensores fuera de servicio el menor tiempo posible. Esto logra evitar
+				inconvenientes y molestias a los usuarios, beneficiando al mantenedor de
+				ascensores. Sabemos lo que es el trabajo de mantenimiento y sabemos que
+				el servicio de post-venta es primordial para nuestros clientes. Somos
+				una empresa argentina dedicada exclusivamente al desarrollo y
+				fabricación de componentes electrónicos para su aplicación en
+				ascensores...<br /><br />
+				Sabemos lo que es el trabajo de mantenimiento y sabemos que el servicio de
+				post-venta es primordial para nuestros clientes.
+			</p>
+		</div>
+	</div>
+</section>

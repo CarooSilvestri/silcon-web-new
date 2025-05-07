@@ -1,0 +1,17 @@
+---
+import ProductsSection from "../../components/products/ProductsSection";
+import Layout from "../../layouts/Layout.astro";
+import Sidebar from "../../components/products/Sidebar";
+import SectionsWrapper from "../../components/products/SectionsWrapper";
+---
+
+<Layout>
+	<div class="text-center my-8">
+		<h2 class="text-3xl font-semibold text-gray-800 tracking-wide">
+			Productos
+		</h2>
+		<div class="w-16 h-1 bg-yellow-500 mx-auto mt-2 rounded"></div>
+	</div>
+
+	<SectionsWrapper client:load />
+</Layout>

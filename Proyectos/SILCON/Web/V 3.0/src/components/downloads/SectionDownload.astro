@@ -1,0 +1,19 @@
+---
+import { Files } from "../../models/downloads.model";
+const { title, files } = Astro.props;
+---
+
+<div class="border-1 p-4 border-collapse">
+	<h4 class="text-xl font-bold">{title}</h4>
+	<div class="">
+		{
+			files.map((file: Files) => (
+				<div class="">
+					<p>{file.slug}</p>
+					{/* {file.version ?? file.version.map((v) => <p>v</p>)} */}
+					{/* <div class="bg-blue-300 w-fit py-2 px-3 rounded-2xl">Descargar</div> */}
+				</div>
+			))
+		}
+	</div>
+</div>
