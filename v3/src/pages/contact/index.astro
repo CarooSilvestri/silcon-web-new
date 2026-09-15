@@ -16,13 +16,6 @@ const contactItems = [
     href: SITE.phoneHref,
   },
   {
-    label: "WhatsApp · Asistencia técnica y consultas 24/7/365",
-    value: SITE.whatsapp,
-    copyValue: SITE.whatsapp,
-    href: SITE.whatsappHref,
-    external: true,
-  },
-  {
     label: "Email",
     value: SITE.email,
     copyValue: SITE.email,
@@ -36,35 +29,59 @@ const contactItems = [
     <section class="inner-page contact-page">
       <Header active="contacto" />
 
-      <div class="page-heading">
+      <div class="page-heading contact-heading-page">
         <p>Contacto</p>
-        <h1>Hoy,<br />mañana,<br /><em>siempre.</em></h1>
+        <h1>Hablemos.</h1>
+        <span>Consultas · Soporte · Asesoramiento</span>
       </div>
 
-      <div class="contact-panel">
-        {contactItems.map((item) => (
-          <div class="contact-item">
-            <span>{item.label}</span>
-            <div class="contact-value">
-              {item.href ? (
-                <a href={item.href} target={item.external ? "_blank" : undefined} rel={item.external ? "noopener noreferrer" : undefined}>
-                  {item.value} <i aria-hidden="true">↗</i>
-                </a>
-              ) : (
-                <strong>{item.value}</strong>
-              )}
-              <button type="button" class="copy-button" data-copy={item.copyValue} aria-label={`Copiar ${item.label}`}>
-                <span data-copy-label>Copiar</span>
-                <i aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7">
-                    <rect x="8" y="8" width="11" height="11" rx="1"></rect>
-                    <path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"></path>
-                  </svg>
-                </i>
-              </button>
-            </div>
+      <div class="contact-layout">
+        <section class="contact-primary">
+          <p>Asistencia técnica y consultas · 24/7/365</p>
+          <h2>Estamos para acompañarte.</h2>
+          <a href={SITE.whatsappHref} target="_blank" rel="noopener noreferrer">
+            Escribir por WhatsApp <span aria-hidden="true">↗</span>
+          </a>
+          <div class="contact-primary-number">
+            <strong>{SITE.whatsapp}</strong>
+            <button type="button" class="copy-button" data-copy={SITE.whatsapp} aria-label="Copiar WhatsApp">
+              <span data-copy-label>Copiar</span>
+              <i aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7">
+                  <rect x="8" y="8" width="11" height="11" rx="1"></rect>
+                  <path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"></path>
+                </svg>
+              </i>
+            </button>
           </div>
-        ))}
+        </section>
+
+        <section class="contact-details" aria-label="Otros datos de contacto">
+          <header>
+            <p>También podés encontrarnos acá</p>
+          </header>
+          {contactItems.map((item) => (
+            <article class="contact-item">
+              <span>{item.label}</span>
+              <div class="contact-value">
+                {item.href ? (
+                  <a href={item.href}>{item.value} <i aria-hidden="true">↗</i></a>
+                ) : (
+                  <strong>{item.value}</strong>
+                )}
+                <button type="button" class="copy-button" data-copy={item.copyValue} aria-label={`Copiar ${item.label}`}>
+                  <span data-copy-label>Copiar</span>
+                  <i aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7">
+                      <rect x="8" y="8" width="11" height="11" rx="1"></rect>
+                      <path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"></path>
+                    </svg>
+                  </i>
+                </button>
+              </div>
+            </article>
+          ))}
+        </section>
         <p class="copy-status" aria-live="polite"></p>
       </div>
     </section>
