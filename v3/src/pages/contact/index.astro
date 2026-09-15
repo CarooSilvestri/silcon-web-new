@@ -1,0 +1,126 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import { SITE } from "../../data/site";
+
+const contactItems = [
+  {
+    label: "Ubicación",
+    value: SITE.location,
+    copyValue: SITE.location,
+  },
+  {
+    label: "Teléfono",
+    value: SITE.phone,
+    copyValue: SITE.phone,
+    href: SITE.phoneHref,
+  },
+  {
+    label: "WhatsApp · Asistencia técnica y consultas 24/7/365",
+    value: SITE.whatsapp,
+    copyValue: SITE.whatsapp,
+    href: SITE.whatsappHref,
+    external: true,
+  },
+  {
+    label: "Email",
+    value: SITE.email,
+    copyValue: SITE.email,
+    href: SITE.emailHref,
+  },
+];
+---
+
+<BaseLayout title="Contacto — Silcon Electrónica" description="Contacto y asistencia técnica Silcon.">
+  <main>
+    <section class="inner-page contact-page">
+      <Header active="contacto" />
+
+      <div class="page-heading">
+        <p>Contacto</p>
+        <h1>Hoy,<br />mañana,<br /><em>siempre.</em></h1>
+      </div>
+
+      <div class="contact-panel">
+        {contactItems.map((item) => (
+          <div class="contact-item">
+            <span>{item.label}</span>
+            <div class="contact-value">
+              {item.href ? (
+                <a href={item.href} target={item.external ? "_blank" : undefined} rel={item.external ? "noopener noreferrer" : undefined}>
+                  {item.value} <i aria-hidden="true">↗</i>
+                </a>
+              ) : (
+                <strong>{item.value}</strong>
+              )}
+              <button type="button" class="copy-button" data-copy={item.copyValue} aria-label={`Copiar ${item.label}`}>
+                <span data-copy-label>Copiar</span>
+                <i aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7">
+                    <rect x="8" y="8" width="11" height="11" rx="1"></rect>
+                    <path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"></path>
+                  </svg>
+                </i>
+              </button>
+            </div>
+          </div>
+        ))}
+        <p class="copy-status" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<script>
+  const fallbackCopy = (text: string) => {
+    const input = document.createElement("textarea");
+    input.value = text;
+    input.setAttribute("readonly", "");
+    input.style.position = "fixed";
+    input.style.opacity = "0";
+    document.body.appendChild(input);
+    input.select();
+    const legacyCopy = Reflect.get(document, "execCommand");
+    const copied = typeof legacyCopy === "function" && Reflect.apply(legacyCopy, document, ["copy"]);
+    input.remove();
+    if (!copied) throw new Error("Copy is unavailable");
+  };
+
+  let copyTimer: number | undefined;
+
+  const setupCopyButtons = () => {
+    const status = document.querySelector<HTMLElement>(".copy-status");
+    const labels = document.querySelectorAll<HTMLElement>("[data-copy-label]");
+
+    document.querySelectorAll<HTMLButtonElement>("[data-copy]").forEach((button) => {
+      button.onclick = async () => {
+        const text = button.dataset.copy ?? "";
+        const label = button.querySelector<HTMLElement>("[data-copy-label]");
+        let copied = true;
+
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch {
+          try {
+            fallbackCopy(text);
+          } catch {
+            copied = false;
+          }
+        }
+
+        labels.forEach((item) => item.textContent = "Copiar");
+        if (label) label.textContent = copied ? "Copiado" : "No disponible";
+        if (status) status.textContent = copied ? `${text} copiado al portapapeles` : "No se pudo acceder al portapapeles";
+
+        window.clearTimeout(copyTimer);
+        copyTimer = window.setTimeout(() => {
+          if (label) label.textContent = "Copiar";
+          if (status) status.textContent = "";
+        }, 1800);
+      };
+    });
+  };
+
+  setupCopyButtons();
+  document.addEventListener("astro:page-load", setupCopyButtons);
+</script>

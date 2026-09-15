@@ -1,0 +1,77 @@
+---
+import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
+import { internalPath } from "../utils/paths";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const fontUrl = internalPath("assets/Satoshi-Variable.woff2");
+const fontFaceCss = `@font-face{font-family:"Satoshi";src:url("${fontUrl}") format("woff2");font-weight:300 900;font-display:swap}`;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#171717" />
+    <link rel="preload" href={fontUrl} as="font" type="font/woff2" crossorigin />
+    <style is:inline set:html={fontFaceCss}></style>
+    <title>{title}</title>
+    <ClientRouter />
+  </head>
+  <body>
+    <div class="page-doors" aria-hidden="true"><span></span><span></span><i><img src={internalPath("assets/logo-silcon.webp")} alt="" width="200" height="40" /></i></div>
+    <slot />
+    <script is:inline>
+      const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+      let doorTimer;
+      let revealObserver;
+
+      document.addEventListener('astro:before-preparation', (event) => {
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const originalLoader = event.loader;
+        event.loader = async () => {
+          document.documentElement.classList.remove('doors-opening');
+          document.documentElement.classList.add('doors-closing');
+          await wait(760);
+          await originalLoader();
+        };
+      });
+      document.addEventListener('astro:after-swap', () => {
+        document.documentElement.classList.remove('doors-closing');
+        document.documentElement.classList.add('doors-opening');
+      });
+      document.addEventListener('astro:page-load', () => {
+        clearTimeout(doorTimer);
+        doorTimer = setTimeout(() => document.documentElement.classList.remove('doors-opening'), 880);
+        revealObserver?.disconnect();
+
+        const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const selectors = ['.about-heading > *','.about-story > *','.about-product','.principles > *','.page-heading > *','.product-card','.download-intro > *','.download-index','.download-group-header > *','.download-file','.contact-panel > *'];
+        const elements = document.querySelectorAll(selectors.join(','));
+        elements.forEach((element, index) => {
+          element.classList.add('reveal');
+          element.style.setProperty('--reveal-delay', `${(index % 4) * 70}ms`);
+        });
+        if (reduceMotion) {
+          document.documentElement.classList.remove('motion-ready');
+          elements.forEach((element) => element.classList.add('is-visible'));
+          return;
+        }
+        document.documentElement.classList.add('motion-ready');
+        revealObserver = new IntersectionObserver((entries) => entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }), { threshold: 0.14, rootMargin: '0px 0px -6% 0px' });
+        elements.forEach((element) => revealObserver.observe(element));
+      });
+    </script>
+  </body>
+</html>

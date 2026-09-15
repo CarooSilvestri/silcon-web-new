@@ -1,0 +1,39 @@
+---
+import { SITE, SOCIAL_LINKS } from "../data/site";
+import { internalPath } from "../utils/paths";
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer id="contacto">
+  <div class="footer-title">
+    <p>Hoy, mañana, siempre</p>
+    <h2>Estamos para acompañarte.</h2>
+  </div>
+  <div class="footer-contact">
+    <span>Asistencia técnica y consultas · 24/7/365</span>
+    <a href={SITE.whatsappHref}>{SITE.whatsapp} ↗</a>
+    <a href={SITE.emailHref}>{SITE.email} ↗</a>
+    <p>{SITE.locationShort}</p>
+    <div class="footer-social">
+      {SOCIAL_LINKS.map((social) => (
+        <a href={social.href} target="_blank" rel="noopener noreferrer">
+          <img src={social.icon} alt="" width="20" height="20" loading="lazy" decoding="async" />
+          <span>{social.name}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <img class="footer-logo" src={internalPath("assets/logo-silcon.webp")} alt="Silcon Electrónica" width="200" height="40" loading="lazy" decoding="async" />
+    <div class="footer-credit">
+      <p>© SILCON {currentYear}</p>
+      <p>Diseño y desarrollo por <a href={SITE.designerHref} target="_blank" rel="noopener noreferrer">CarooDesigns ↗</a></p>
+    </div>
+    <div class="footer-legal">
+      <a href={SITE.fiscalHref} target="_blank" rel="noopener noreferrer" aria-label="Información fiscal de Silcon">
+        <img src={internalPath("assets/data-fiscal.webp")} alt="Data Fiscal ARCA" width="40" height="55" loading="lazy" decoding="async" />
+      </a>
+    </div>
+  </div>
+</footer>

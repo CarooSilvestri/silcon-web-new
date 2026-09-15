@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { internalPath } from "../utils/paths";
+---
+<BaseLayout title="Silcon Electrónica — Electrónica para ascensores" description="Empresa argentina dedicada al desarrollo y fabricación de componentes electrónicos para ascensores.">
+<main id="inicio">
+  <section class="hero"><Header />
+    <div class="hero-title"><p class="kicker">Desarrollo y fabricación argentina</p><h1><span>La mejor electrónica</span><span>para su <em>ascensor</em></span></h1></div>
+    <div class="hero-visual"><img src={internalPath("assets/buildings.jpg")} alt="Edificios de Buenos Aires" width="3276" height="5822" fetchpriority="high" decoding="async" /><div class="hero-shade"></div><p class="hero-caption">Tecnología que acompaña<br/>cada recorrido.</p></div>
+  </section>
+  <section class="about" id="empresa">
+    <div class="about-heading"><p>Sobre Silcon</p><h2>La innovación<br/>nos motiva</h2><p class="lead">Somos una empresa argentina dedicada exclusivamente al desarrollo y fabricación de componentes electrónicos para su aplicación en ascensores.</p></div>
+    <div class="about-story"><p class="story-opening">Nuestro equipo de desarrollo cuenta con una amplia experiencia en mantenimiento y service de equipos de alta tecnología, experiencia que ha sido volcada en el desarrollo de nuestros nuevos productos.</p><div class="story-columns"><p>Siempre con el objetivo fundamental de simplificar la tarea de detección de fallas en los distintos componentes del ascensor durante la atención de reclamos o al realizar tareas de mantenimiento, apuntando a mantener los ascensores fuera de servicio el menor tiempo posible.</p><p>Esto logra evitar inconvenientes y molestias a los usuarios, beneficiando al mantenedor de ascensores.</p></div><strong>Sabemos lo que es el trabajo de mantenimiento y sabemos que el servicio de post-venta es primordial para nuestros clientes.</strong></div>
+    <figure class="about-product"><span>SLC 80</span><img src={internalPath("assets/products/slc80.jpg")} alt="Módulo central SLC80 de Silcon" width="2073" height="1867" loading="lazy" decoding="async"/><figcaption>Diseñado y fabricado en Argentina</figcaption></figure>
+  </section>
+  <section class="principles"><p>Simplicidad al servicio<br/>del instalador</p><p>Robustez para<br/>el mantenedor</p><p>Elegante y sofisticada<br/>para clientes exigentes</p></section>
+  <Footer />
+</main>
+</BaseLayout>

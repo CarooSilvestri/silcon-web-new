@@ -1,0 +1,300 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import productData from "../../data-products.json";
+import { internalPath } from "../../utils/paths";
+
+type Wiring = {
+  type?: string;
+  unique?: string;
+  group?: string;
+};
+
+type Stops = {
+  cant: string;
+  description: string;
+};
+
+type Product = {
+  id: string;
+  name: string;
+  description?: string;
+  in_outs?: string;
+  wiring?: Wiring[];
+  drivers?: string[];
+  notes?: string;
+  programing?: string;
+  paradas?: Stops[];
+  carcasa?: string;
+  size?: string;
+  color?: string | string[];
+};
+
+const categoryNames: Record<string, string> = {
+  Placas: "Placas",
+  Tableros: "Tableros",
+  Despachos: "Despachos",
+  Programadores: "Programadores",
+  Displays: "Displays",
+  algo2: "Interfaces y fuentes",
+  Accesorios: "Accesorios",
+};
+
+const categories = Object.entries(productData).map(([key, items]) => ({
+  key,
+  name: categoryNames[key] ?? key,
+  products: items as Product[],
+}));
+
+const animatedProductIds = new Set(["14", "17"]);
+
+const getProductVariant = (product: Product) => {
+  if (product.in_outs) return `${product.in_outs} entradas / salidas`;
+  if (product.carcasa) return `Carcasa ${product.carcasa.toLowerCase()}`;
+  if (product.size) return product.size;
+  return "";
+};
+
+const products = categories.flatMap((category) =>
+  category.products.map((product) => ({
+    ...product,
+    categoryKey: category.key,
+    categoryName: category.name,
+    variant: getProductVariant(product),
+    hasVideo: animatedProductIds.has(product.id),
+  })),
+);
+---
+
+<BaseLayout
+  title="Productos — Silcon Electrónica"
+  description="Catálogo completo de productos electrónicos Silcon para ascensores."
+>
+  <main>
+    <section class="inner-page products-page">
+      <Header active="productos" />
+
+      <div class="page-heading products-heading-page">
+        <p>Catálogo</p>
+        <h1>Electrónica para cada proyecto.</h1>
+      </div>
+
+      <nav class="filters product-filters" aria-label="Filtrar productos">
+        <button class="selected" type="button" data-filter="all" aria-pressed="true">
+          Todos <span>{products.length}</span>
+        </button>
+        {categories.map((category) => (
+          <button type="button" data-filter={category.key} aria-pressed="false">
+            {category.name} <span>{category.products.length}</span>
+          </button>
+        ))}
+      </nav>
+
+      <div class="product-grid catalog" aria-live="polite">
+        {products.map((product, index) => (
+          <article class="product-card" data-category={product.categoryKey}>
+            <button
+              class="product-card-button"
+              type="button"
+              data-open-product={`product-${product.id}`}
+              aria-label={`Ver información de ${product.name}`}
+            >
+              <div class:list={["product-image", product.hasVideo && "has-video"]}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <img
+                  src={internalPath(`assets/products/product-${product.id}.jpg`)}
+                  alt={product.name}
+                  loading={index < 3 ? "eager" : "lazy"}
+                  decoding="async"
+                />
+                {product.hasVideo && (
+                  <video
+                    data-card-video
+                    muted
+                    loop
+                    playsinline
+                    preload="none"
+                    poster={internalPath(`assets/products/product-${product.id}.jpg`)}
+                    aria-label={`${product.name} en funcionamiento`}
+                  >
+                    <source src={internalPath(`assets/products/product-${product.id}.mp4`)} type="video/mp4" />
+                  </video>
+                )}
+                {product.hasVideo && <b>▶ Vista en movimiento</b>}
+                <i aria-hidden="true">+</i>
+              </div>
+              <p>{product.categoryName}</p>
+              <h2>{product.name}</h2>
+              {product.variant && <small>{product.variant}</small>}
+            </button>
+          </article>
+        ))}
+      </div>
+
+      {products.map((product) => (
+        <dialog class="product-modal" id={`product-${product.id}`} aria-labelledby={`title-${product.id}`}>
+          <div class="product-modal-shell">
+            <button class="product-modal-close" type="button" data-close-modal aria-label="Cerrar ficha">
+              <span aria-hidden="true">×</span>
+            </button>
+
+            <figure class="product-modal-image">
+              {product.hasVideo ? (
+                <video
+                  data-modal-video
+                  muted
+                  loop
+                  playsinline
+                  preload="none"
+                  poster={internalPath(`assets/products/product-${product.id}.jpg`)}
+                  aria-label={`${product.name} en funcionamiento`}
+                >
+                  <source src={internalPath(`assets/products/product-${product.id}.mp4`)} type="video/mp4" />
+                </video>
+              ) : (
+                <img src={internalPath(`assets/products/product-${product.id}.jpg`)} alt={product.name} loading="lazy" decoding="async" />
+              )}
+              <figcaption>{product.categoryName} · #{product.id.padStart(2, "0")}</figcaption>
+            </figure>
+
+            <div class="product-modal-content">
+              <p class="product-modal-category">{product.categoryName}</p>
+              <h2 id={`title-${product.id}`}>{product.name}</h2>
+
+              {(product.in_outs || product.carcasa || product.size || product.color) && (
+                <dl class="product-facts">
+                  {product.in_outs && <><dt>Entradas / salidas</dt><dd>{product.in_outs}</dd></>}
+                  {product.carcasa && <><dt>Carcasa</dt><dd>{product.carcasa}</dd></>}
+                  {product.size && <><dt>Medidas</dt><dd>{product.size}</dd></>}
+                  {product.color && (
+                    <><dt>Color</dt><dd>{Array.isArray(product.color) ? product.color.join(" · ") : product.color}</dd></>
+                  )}
+                </dl>
+              )}
+
+              {product.description && <p class="product-description">{product.description}</p>}
+
+              {product.drivers && product.drivers.length > 0 && (
+                <section class="product-detail-section">
+                  <h3>Características</h3>
+                  <ul>{product.drivers.map((driver) => <li>{driver}</li>)}</ul>
+                </section>
+              )}
+
+              {product.wiring && product.wiring.length > 0 && (
+                <section class="product-detail-section">
+                  <h3>Cableado y maniobras</h3>
+                  <div class="wiring-list">
+                    {product.wiring.map((wiring) => (
+                      <article>
+                        {wiring.type && <h4>{wiring.type}</h4>}
+                        {wiring.unique && <p><strong>Individual:</strong> {wiring.unique}</p>}
+                        {wiring.group && <p><strong>Grupo:</strong> {wiring.group}</p>}
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {product.paradas && product.paradas.length > 0 && (
+                <section class="product-detail-section">
+                  <h3>Configuraciones</h3>
+                  <div class="stops-list">
+                    {product.paradas.map((stop) => (
+                      <article><h4>{stop.cant}</h4><p>{stop.description}</p></article>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {(product.programing || product.notes) && (
+                <div class="product-notes">
+                  {product.programing && <p><strong>Programación:</strong> {product.programing}</p>}
+                  {product.notes && <p><strong>Nota:</strong> {product.notes}</p>}
+                </div>
+              )}
+
+              {!product.description && !product.drivers && !product.wiring && !product.paradas && (
+                <p class="product-description">Consultanos para conocer características, compatibilidad y opciones de configuración.</p>
+              )}
+
+              <a class="product-modal-contact" href={internalPath("contact/")}>
+                Consultar por este producto <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+        </dialog>
+      ))}
+    </section>
+    <Footer />
+  </main>
+</BaseLayout>
+
+<script>
+  const setupProducts = () => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const filters = document.querySelectorAll<HTMLButtonElement>("[data-filter]");
+    const cards = document.querySelectorAll<HTMLElement>(".product-card[data-category]");
+    const resetVideo = (video: HTMLVideoElement | null) => {
+      if (!video) return;
+      video.pause();
+      video.currentTime = 0;
+    };
+
+    filters.forEach((filter) => {
+      filter.onclick = () => {
+        const selectedCategory = filter.dataset.filter;
+        filters.forEach((item) => {
+          const selected = item === filter;
+          item.classList.toggle("selected", selected);
+          item.setAttribute("aria-pressed", String(selected));
+        });
+
+        cards.forEach((card) => {
+          resetVideo(card.querySelector<HTMLVideoElement>("[data-card-video]"));
+          card.hidden = selectedCategory !== "all" && card.dataset.category !== selectedCategory;
+        });
+      };
+    });
+
+    document.querySelectorAll<HTMLButtonElement>("[data-open-product]").forEach((button) => {
+      const cardVideo = button.querySelector<HTMLVideoElement>("[data-card-video]");
+      const playCardVideo = () => {
+        if (!reduceMotion && cardVideo) cardVideo.play().catch(() => undefined);
+      };
+      const stopCardVideo = () => {
+        resetVideo(cardVideo);
+      };
+
+      button.onpointerenter = playCardVideo;
+      button.onpointerleave = stopCardVideo;
+      button.onfocus = playCardVideo;
+      button.onblur = stopCardVideo;
+      button.onclick = () => {
+        const id = button.dataset.openProduct;
+        const modal = id ? document.getElementById(id) : null;
+        if (modal instanceof HTMLDialogElement) {
+          modal.showModal();
+          const modalVideo = modal.querySelector<HTMLVideoElement>("[data-modal-video]");
+          if (!reduceMotion && modalVideo) modalVideo.play().catch(() => undefined);
+        }
+      };
+    });
+
+    document.querySelectorAll<HTMLDialogElement>(".product-modal").forEach((modal) => {
+      const close = modal.querySelector<HTMLButtonElement>("[data-close-modal]");
+      const contact = modal.querySelector<HTMLAnchorElement>(".product-modal-contact");
+      const closeModal = () => modal.close();
+      if (close) close.onclick = closeModal;
+      if (contact) contact.onclick = closeModal;
+      modal.onclick = (event) => {
+        if (event.target === modal) closeModal();
+      };
+      modal.onclose = () => resetVideo(modal.querySelector<HTMLVideoElement>("[data-modal-video]"));
+    });
+  };
+
+  setupProducts();
+  document.addEventListener("astro:page-load", setupProducts);
+</script>

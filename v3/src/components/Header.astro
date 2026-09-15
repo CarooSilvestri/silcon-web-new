@@ -1,0 +1,66 @@
+---
+import { SITE } from "../data/site";
+import { internalPath } from "../utils/paths";
+
+interface Props {
+  active?: "inicio" | "productos" | "descargas" | "contacto";
+}
+
+const { active = "inicio" } = Astro.props;
+const navigation = [
+  { id: "inicio", label: "Inicio", href: internalPath("") },
+  { id: "productos", label: "Productos", href: internalPath("products/") },
+  { id: "descargas", label: "Descargas", href: internalPath("downloads/") },
+  { id: "contacto", label: "Contacto", href: internalPath("contact/") },
+] as const;
+const floorBySection = {
+  inicio: "PB",
+  productos: "01",
+  descargas: "02",
+  contacto: "03",
+} as const;
+const currentFloor = floorBySection[active];
+const floorLabel = active === "inicio" ? "Planta baja" : `Piso ${currentFloor}`;
+const arrowPixels = ["00100", "01110", "10101", "00100", "00100", "00100", "00100"];
+const arrowSpacing = ["00000", "00000", "00000", "00000"];
+const matrixCharacters: Record<string, string[]> = {
+  P: ["11110", "10001", "10001", "11110", "10000", "10000", "10000"],
+  B: ["11110", "10001", "10001", "11110", "10001", "10001", "11110"],
+  0: ["01110", "10001", "10011", "10101", "11001", "10001", "01110"],
+  1: ["00100", "01100", "00100", "00100", "00100", "00100", "01110"],
+  2: ["01110", "10001", "00001", "00010", "00100", "01000", "11111"],
+  3: ["11110", "00001", "00001", "01110", "00001", "00001", "11110"],
+};
+---
+
+<header class="site-header">
+  <a class="brand" href={internalPath("")} aria-label="Silcon Electrónica, inicio">
+    <img src={internalPath("assets/logo-silcon.webp")} alt="Silcon Electrónica" width="200" height="40" decoding="async" />
+  </a>
+  <div class="header-floor-display" role="img" aria-label={floorLabel}>
+    <span class="header-floor-arrow" aria-hidden="true">
+      <span class="header-floor-arrow-track">
+        {[...arrowPixels, ...arrowSpacing, ...arrowPixels, ...arrowSpacing].join("").split("").map((pixel) => (
+          <i class:list={{ "is-lit": pixel === "1" }}></i>
+        ))}
+      </span>
+    </span>
+    <span class="matrix-text" aria-hidden="true">
+      {currentFloor.split("").map((character) => (
+        <span class="matrix-character">
+          {matrixCharacters[character].join("").split("").map((pixel) => (
+            <i class:list={{ "is-lit": pixel === "1" }}></i>
+          ))}
+        </span>
+      ))}
+    </span>
+  </div>
+  <nav aria-label="Navegación principal">
+    {navigation.map((item) => (
+      <a class:list={{ active: active === item.id }} href={item.href}>{item.label}</a>
+    ))}
+  </nav>
+  <a class="header-contact" href={SITE.monitoringHref} target="_blank" rel="noopener noreferrer">
+    Monitoreo remoto <span aria-hidden="true">↗</span>
+  </a>
+</header>

@@ -1,0 +1,141 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { internalPath } from "../../utils/paths";
+
+type Download = {
+  name: string;
+  file: string;
+  detail: string;
+  pages: number;
+};
+
+type DownloadGroup = {
+  id: string;
+  name: string;
+  files: Download[];
+};
+
+const groups: DownloadGroup[] = [
+  {
+    id: "manuales",
+    name: "Manuales de usuario",
+    files: [
+      { name: "SLC 10.0", file: "manual-slc-10.pdf", detail: "Manual del usuario", pages: 72 },
+      { name: "SLC 4.0", file: "manual-slc-4.pdf", detail: "Manual del usuario", pages: 67 },
+      { name: "SLC 3.0", file: "manual-slc-3.pdf", detail: "Manual del usuario", pages: 62 },
+      { name: "Despacho", file: "manual-despacho.pdf", detail: "Manual del usuario", pages: 10 },
+      { name: "SLC10 para escalera mecánica", file: "manual-slc10-escalera.pdf", detail: "Manual del usuario", pages: 20 },
+    ],
+  },
+  {
+    id: "fallas",
+    name: "Códigos de falla",
+    files: [
+      { name: "SLC10 / SLC80 / SLC100", file: "codigos-falla-slc.pdf", detail: "Códigos de falla", pages: 3 },
+      { name: "DPC 4.0", file: "codigos-error-dpc-4.pdf", detail: "Códigos de error", pages: 1 },
+    ],
+  },
+  {
+    id: "borneras",
+    name: "Borneras y medidas",
+    files: [
+      { name: "Borneras SLC80", file: "borneras-slc80.pdf", detail: "Identificación de borneras", pages: 1 },
+      { name: "Bornes DPC 4.0", file: "bornes-dpc-4.pdf", detail: "Identificación de bornes", pages: 1 },
+      { name: "DPC 3.0", file: "medidas-bornes-dpc-3.pdf", detail: "Medidas y bornes", pages: 1 },
+      { name: "SLC10", file: "medidas-bornes-slc10.pdf", detail: "Medidas y bornes", pages: 1 },
+      { name: "SLC10 para escalera", file: "medidas-bornes-slc10-escalera.pdf", detail: "Medidas y bornes", pages: 1 },
+    ],
+  },
+  {
+    id: "cableados",
+    name: "Cableados de maniobras",
+    files: [
+      { name: "Cableado 1V", file: "cableado-1v.pdf", detail: "Maniobra de una velocidad", pages: 3 },
+      { name: "Cableado 2V", file: "cableado-2v.pdf", detail: "Maniobra de dos velocidades", pages: 3 },
+      { name: "Cableado HD", file: "cableado-hd.pdf", detail: "Maniobra hidráulica", pages: 3 },
+      { name: "Cableado V3F", file: "cableado-v3f.pdf", detail: "Maniobra de frecuencia variable", pages: 3 },
+    ],
+  },
+  {
+    id: "conexiones",
+    name: "Interconexión de placas",
+    files: [
+      { name: "Conexión SLC - Despacho", file: "conexion-slc-despacho.pdf", detail: "Esquema de interconexión", pages: 1 },
+      { name: "Conexión SLC - UCAB", file: "conexion-slc-ucab.pdf", detail: "Esquema de interconexión", pages: 1 },
+    ],
+  },
+  {
+    id: "cursos",
+    name: "Cursos básicos",
+    files: [
+      { name: "01 · Electricidad básica", file: "curso-1-electricidad-basica.pdf", detail: "Curso Silcon", pages: 25 },
+      { name: "02 · Motores y generadores", file: "curso-2-motores-generadores.pdf", detail: "Curso Silcon", pages: 18 },
+      { name: "03 · Electrónica básica", file: "curso-3-electronica-basica.pdf", detail: "Curso Silcon", pages: 17 },
+      { name: "04 · Mecánica básica", file: "curso-4-mecanica-basica.pdf", detail: "Curso Silcon", pages: 14 },
+      { name: "05 · Hidráulica básica", file: "curso-5-hidraulica-basica.pdf", detail: "Curso Silcon", pages: 6 },
+      { name: "06 · Ascensores básico", file: "curso-6-ascensores-basico.pdf", detail: "Curso Silcon", pages: 62 },
+    ],
+  },
+];
+
+const totalFiles = groups.reduce((total, group) => total + group.files.length, 0);
+---
+
+<BaseLayout title="Descargas — Silcon Electrónica" description="Documentación técnica, manuales y cursos Silcon.">
+  <main>
+    <section class="inner-page downloads-page">
+      <Header active="descargas" />
+
+      <div class="page-heading downloads-heading-page">
+        <p>Descargas</p>
+        <h1>Documentación técnica.</h1>
+        <span>Manuales · Esquemas · Cursos</span>
+      </div>
+
+      <div class="download-intro">
+        <p>Información para instalación, configuración y mantenimiento de equipos Silcon.</p>
+        <p>La documentación se actualiza de forma constante. Si necesitás una versión específica, <a href={internalPath("contact/")}>consultanos</a>.</p>
+        <span>{totalFiles} archivos disponibles · PDF</span>
+      </div>
+
+      <nav class="download-index" aria-label="Categorías de descargas">
+        {groups.map((group, index) => (
+          <a href={`#${group.id}`}>
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            {group.name}
+            <small>{group.files.length}</small>
+          </a>
+        ))}
+      </nav>
+
+      <div class="download-groups">
+        {groups.map((group, groupIndex) => (
+          <section class="download-group" id={group.id}>
+            <header class="download-group-header">
+              <span>{String(groupIndex + 1).padStart(2, "0")}</span>
+              <h2>{group.name}</h2>
+              <p>{group.files.length} {group.files.length === 1 ? "archivo" : "archivos"}</p>
+            </header>
+
+            <div class="download-files">
+              {group.files.map((file) => (
+                <a class="download-file" href={internalPath(`downloads/${file.file}`)} download>
+                  <span class="download-type">PDF</span>
+                  <div>
+                    <h3>{file.name}</h3>
+                    <p>{file.detail}</p>
+                  </div>
+                  <small>{file.pages} {file.pages === 1 ? "página" : "páginas"}</small>
+                  <i aria-hidden="true">↓</i>
+                </a>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+    </section>
+    <Footer />
+  </main>
+</BaseLayout>
