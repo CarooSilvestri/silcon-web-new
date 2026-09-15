@@ -1,0 +1,86 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { SITE } from "../../data/site";
+---
+
+<BaseLayout
+  title="Monitoreo remoto — Silcon Electrónica"
+  description="Acceso al sistema de monitoreo remoto de equipos Silcon."
+>
+  <main>
+    <section class="inner-page monitoring-page">
+      <Header active="monitoreo" />
+
+      <div class="page-heading monitoring-heading-page">
+        <p>Monitoreo</p>
+        <h1>Control remoto,<br /><em>siempre conectado.</em></h1>
+        <span>Acceso · Supervisión · Asistencia</span>
+      </div>
+
+      <section class="monitoring-access" aria-labelledby="monitoring-title">
+        <div class="monitoring-copy">
+          <p>Acceso al sistema</p>
+          <h2 id="monitoring-title">Ingresá con tu usuario y contraseña.</h2>
+          <p>Supervisá tus equipos Silcon desde el sistema de monitoreo remoto.</p>
+          <a href={SITE.monitoringAppHref} target="_blank" rel="noopener noreferrer">
+            Ingresar al monitoreo <span aria-hidden="true">↗</span>
+          </a>
+          <small>El sistema se abrirá en una nueva pestaña.</small>
+        </div>
+
+        <aside class="monitoring-demo" aria-labelledby="demo-title">
+          <header>
+            <span>Demo</span>
+            <p>Acceso de demostración</p>
+          </header>
+          <h2 id="demo-title">Probá el sistema.</h2>
+          <dl>
+            <div><dt>Usuario</dt><dd>usuario</dd></div>
+            <div><dt>Contraseña</dt><dd>1234</dd></div>
+          </dl>
+          <button type="button" data-copy-demo>
+            <span data-copy-demo-label>Copiar datos de acceso</span>
+            <i aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7">
+                <rect x="8" y="8" width="11" height="11" rx="1"></rect>
+                <path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"></path>
+              </svg>
+            </i>
+          </button>
+          <p class="copy-status" aria-live="polite"></p>
+        </aside>
+      </section>
+    </section>
+    <Footer />
+  </main>
+</BaseLayout>
+
+<script>
+  const setupDemoCopy = () => {
+    const button = document.querySelector<HTMLButtonElement>("[data-copy-demo]");
+    const label = button?.querySelector<HTMLElement>("[data-copy-demo-label]");
+    const status = document.querySelector<HTMLElement>(".monitoring-demo .copy-status");
+    if (!button || !label) return;
+
+    button.onclick = async () => {
+      try {
+        await navigator.clipboard.writeText("Usuario: usuario\nContraseña: 1234");
+        label.textContent = "Datos copiados";
+        if (status) status.textContent = "Usuario y contraseña copiados al portapapeles";
+      } catch {
+        label.textContent = "No disponible";
+        if (status) status.textContent = "No se pudo acceder al portapapeles";
+      }
+
+      window.setTimeout(() => {
+        label.textContent = "Copiar datos de acceso";
+        if (status) status.textContent = "";
+      }, 1800);
+    };
+  };
+
+  setupDemoCopy();
+  document.addEventListener("astro:page-load", setupDemoCopy);
+</script>

@@ -9,7 +9,8 @@ export const SITE = {
   whatsappHref: "https://wa.me/5491136536916",
   email: "consultas@silcon.com.ar",
   emailHref: "mailto:consultas@silcon.com.ar",
-  monitoringHref: "https://silcon.com.ar/monitoreo.html",
+  monitoringHref: internalPath("monitoreo/"),
+  monitoringAppHref: "https://silcon.com.ar/monitoreo",
   fiscalHref: "http://qr.afip.gob.ar/?qr=e418ibHMz4zfdBL2bj8Plw,,",
   designerHref: "https://www.behance.net/caroosilvestri",
 } as const;

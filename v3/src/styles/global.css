@@ -27,7 +27,8 @@ button{font:inherit;color:inherit}
 .matrix-character i,.header-floor-arrow i{width:3px;height:3px;background:#4c1815;border-radius:50%;box-shadow:inset 0 0 1px #000}
 .matrix-character i.is-lit,.header-floor-arrow i.is-lit{background:#f14a3b;box-shadow:0 0 4px #f14a3bbb}
 .header-contact{display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;color:#fff;background:var(--red);font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;transition:background-color .2s ease}
-.header-contact:hover,.header-contact:focus-visible{background:#842422}
+.header-contact:hover,.header-contact:focus-visible,.header-contact.active{background:#842422}
+.header-contact.active{box-shadow:inset 0 -2px 0 var(--yellow)}
 @keyframes headerDisplayArrow{0%{transform:translateY(0)}91.666%,100%{transform:translateY(var(--arrow-cycle))}}
 .hero-title{position:relative;z-index:3;padding:clamp(3rem,7vh,6rem) 2vw 0;pointer-events:none}
 .kicker{font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.18em}
@@ -200,12 +201,41 @@ to{opacity:0;transform:translate(-50%,-50%) scale(.96)}
 .copy-button span{color:inherit;font-size:inherit}
 .copy-button i{height:17px;font-style:normal}
 .copy-status{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* Acceso al monitoreo remoto */
+.monitoring-heading-page{grid-template-columns:.2fr 1.25fr .45fr;padding-block:clamp(4.5rem,7vw,7rem)}
+.monitoring-heading-page h1{max-width:920px;font-size:clamp(3.4rem,5.7vw,6.4rem);line-height:.9}
+.monitoring-heading-page h1 em{font-family:Georgia,serif;font-weight:400}
+.monitoring-heading-page>span{max-width:260px;line-height:1.6}
+.monitoring-access{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(320px,.75fr);margin:clamp(3rem,5vw,5.5rem) var(--content-inset) 1rem;border:1px solid var(--ink)}
+.monitoring-copy{min-height:470px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:clamp(2.5rem,5vw,5.5rem);background:var(--ink);color:#fff}
+.monitoring-copy>p:first-child,.monitoring-demo header p{margin:0;color:var(--yellow);font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em}
+.monitoring-copy h2{max-width:720px;margin:1.4rem 0;font-size:clamp(2.5rem,4.7vw,5.2rem);line-height:.93;letter-spacing:-.05em}
+.monitoring-copy>p:not(:first-child){max-width:560px;margin:0;color:#b4b1aa;font-size:1rem;line-height:1.65}
+.monitoring-copy>a{display:flex;justify-content:space-between;align-items:center;gap:3rem;min-width:min(100%,360px);margin-top:2.5rem;padding:1.1rem 1.25rem;color:#fff;background:var(--red);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;transition:background-color .2s ease}
+.monitoring-copy>a:hover,.monitoring-copy>a:focus-visible{background:#842422}
+.monitoring-copy>a span{font-size:1.05rem}
+.monitoring-copy>small{margin-top:.9rem;color:#85827c;font-size:.66rem;letter-spacing:.04em}
+.monitoring-demo{position:relative;display:flex;flex-direction:column;justify-content:center;padding:clamp(2.2rem,4vw,4rem);background:#e9e6de}
+.monitoring-demo header{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.monitoring-demo header>span{padding:.45rem .6rem;color:#fff;background:var(--red);font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.13em}
+.monitoring-demo header p{color:var(--red);text-align:right}
+.monitoring-demo>h2{margin:2rem 0 2.5rem;font-size:clamp(2.2rem,3.5vw,3.9rem);line-height:.95;letter-spacing:-.045em}
+.monitoring-demo dl{margin:0;border-top:1px solid var(--ink)}
+.monitoring-demo dl>div{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:1rem;padding:1.25rem 0;border-bottom:1px solid var(--line)}
+.monitoring-demo dt{color:var(--muted);font-size:.64rem;text-transform:uppercase;letter-spacing:.12em}
+.monitoring-demo dd{margin:0;color:var(--red);font:400 clamp(1.4rem,2.6vw,2.2rem) Georgia,serif}
+.monitoring-demo button{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:2rem;padding:1rem;color:var(--ink);background:transparent;border:1px solid var(--ink);cursor:pointer;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;transition:color .2s ease,background-color .2s ease}
+.monitoring-demo button:hover,.monitoring-demo button:focus-visible{color:#fff;background:var(--red);border-color:var(--red)}
+.monitoring-demo button i{height:17px;font-style:normal}
 @media(max-width:700px){.inner-page{padding-bottom:4.5rem}
 .page-heading{grid-template-columns:1fr;gap:1.25rem;padding:3.5rem 0}
 .page-heading h1{font-size:clamp(3rem,14vw,5rem);line-height:.9}
 .catalog{padding-top:2.5rem}
 .contact-page .page-heading{grid-template-columns:1fr}
 .contact-panel{margin-top:3rem}
+.monitoring-heading-page{grid-template-columns:1fr}
+.monitoring-heading-page h1{font-size:clamp(2.8rem,12vw,4.5rem)}
 .page-doors i{font-size:.55rem}
 }
 
@@ -335,6 +365,21 @@ to{opacity:0;transform:translate(-50%,-50%) scale(.96)}
 .download-file>small{display:none}
 .download-type{width:40px;height:40px}
 .download-file>i{width:36px;height:36px}
+}
+
+@media(max-width:900px){
+.monitoring-heading-page{grid-template-columns:.2fr 1fr}
+.monitoring-heading-page>span{grid-column:2}
+.monitoring-access{grid-template-columns:1fr}
+.monitoring-copy{min-height:auto}
+}
+@media(max-width:700px){
+.monitoring-heading-page{grid-template-columns:1fr}
+.monitoring-heading-page>span{grid-column:auto}
+.monitoring-access{margin:3rem 0 0}
+.monitoring-copy,.monitoring-demo{padding:2.25rem 1.4rem}
+.monitoring-copy h2{font-size:clamp(2.45rem,11vw,4rem)}
+.monitoring-copy>a{width:100%;min-width:0}
 }
 
 @media(max-width:480px){.contact-value{grid-template-columns:1fr;gap:.75rem}
