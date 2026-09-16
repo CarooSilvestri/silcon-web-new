@@ -30,7 +30,7 @@ button{font:inherit;color:inherit}
 .header-contact:hover,.header-contact:focus-visible,.header-contact.active{background:#842422}
 .header-contact.active{box-shadow:inset 0 -2px 0 var(--yellow)}
 @keyframes headerDisplayArrow{0%{transform:translateY(0)}91.666%,100%{transform:translateY(var(--arrow-cycle))}}
-.hero-title{position:relative;z-index:3;padding:clamp(3rem,7vh,6rem) 2vw clamp(3.5rem,6vw,6rem);background:var(--paper);pointer-events:none}
+.hero-title{position:relative;z-index:3;padding:clamp(3rem,7vh,6rem) 2vw clamp(2rem,3vw,3.5rem);background:var(--paper);pointer-events:none}
 .kicker{font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.18em}
 .kicker{display:flex;align-items:center;gap:.75rem}
 .kicker:before{content:'';width:32px;height:2px;background:var(--yellow)}
@@ -114,7 +114,7 @@ h1 span:last-child{margin-left:0}
 .header-contact span{font-size:.8rem}
 .site-header nav{margin-top:.7rem}
 .site-header nav a{padding:.72rem .1rem;font-size:.57rem;letter-spacing:.075em}
-.hero-title{padding:3rem 0 3rem}
+.hero-title{padding:3rem 0 2rem}
 h1{margin-bottom:0;font-size:16vw}
 h1 span:last-child{width:fit-content;padding-right:.04em;font-size:.82em;line-height:.92}
 .hero-visual{height:clamp(390px,125vw,520px)}
