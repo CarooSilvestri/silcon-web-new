@@ -53,7 +53,7 @@ const fontFaceCss = `@font-face{font-family:"Satoshi";src:url("${fontUrl}") form
         revealObserver?.disconnect();
 
         const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const selectors = ['.about-heading > *','.about-story > *','.about-elevator','.page-heading > *','.product-card','.download-intro > *','.download-index','.download-group-header > *','.download-file','.contact-layout > *'];
+        const selectors = ['.about-heading > *','.about-story > *:not(.principles)','.about-elevator','.page-heading > *','.product-card','.download-intro > *','.download-index','.download-group-header > *','.download-file','.contact-layout > *'];
         const elements = document.querySelectorAll(selectors.join(','));
         elements.forEach((element, index) => {
           element.classList.add('reveal');

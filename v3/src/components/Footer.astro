@@ -13,8 +13,17 @@ const currentYear = new Date().getFullYear();
   <div class="footer-contact">
     <span>Asistencia técnica y consultas · 24/7/365</span>
     <a href={SITE.whatsappHref}>{SITE.whatsapp} ↗</a>
-    <a href={SITE.emailHref}>{SITE.email} ↗</a>
+    <button type="button" class="footer-copy" data-footer-copy={SITE.email} aria-label={`Copiar ${SITE.email}`}>
+      <span>{SITE.email}</span>
+      <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18">
+        <rect x="8" y="8" width="11" height="11" rx="1.5"></rect>
+        <path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-10A1.5 1.5 0 0 0 3 5.5v10A1.5 1.5 0 0 0 4.5 17H8"></path>
+      </svg>
+    </button>
     <p>{SITE.locationShort}</p>
+  </div>
+  <div class="footer-social-column">
+    <span>Seguinos</span>
     <div class="footer-social">
       {SOCIAL_LINKS.map((social) => (
         <a href={social.href} target="_blank" rel="noopener noreferrer">
@@ -37,3 +46,51 @@ const currentYear = new Date().getFullYear();
     </div>
   </div>
 </footer>
+
+<script>
+  const fallbackFooterCopy = (text: string) => {
+    const input = document.createElement("textarea");
+    input.value = text;
+    input.setAttribute("readonly", "");
+    input.style.position = "fixed";
+    input.style.opacity = "0";
+    document.body.appendChild(input);
+    input.select();
+    const legacyCopy = Reflect.get(document, "execCommand");
+    const copied = typeof legacyCopy === "function" && Reflect.apply(legacyCopy, document, ["copy"]);
+    input.remove();
+    if (!copied) throw new Error("Copy is unavailable");
+  };
+
+  let footerCopyTimer: number | undefined;
+
+  const setupFooterCopy = () => {
+    document.querySelectorAll<HTMLButtonElement>("[data-footer-copy]").forEach((button) => {
+      button.onclick = async () => {
+        const text = button.dataset.footerCopy ?? "";
+        let copied = true;
+
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch {
+          try {
+            fallbackFooterCopy(text);
+          } catch {
+            copied = false;
+          }
+        }
+
+        button.classList.toggle("is-copied", copied);
+        button.setAttribute("aria-label", copied ? `${text} copiado` : "No se pudo copiar el correo");
+        window.clearTimeout(footerCopyTimer);
+        footerCopyTimer = window.setTimeout(() => {
+          button.classList.remove("is-copied");
+          button.setAttribute("aria-label", `Copiar ${text}`);
+        }, 1800);
+      };
+    });
+  };
+
+  setupFooterCopy();
+  document.addEventListener("astro:page-load", setupFooterCopy);
+</script>

@@ -39,6 +39,14 @@ const matrixCharacters: Record<string, string[]> = {
   <a class="brand" href={internalPath("")} aria-label="Silcon Electrónica, inicio">
     <img src={internalPath("assets/logo-silcon.webp")} alt="Silcon Electrónica" width="240" height="48" decoding="async" />
   </a>
+  <nav aria-label="Navegación principal">
+    {navigation.map((item) => (
+      <a class:list={{ active: active === item.id }} href={item.href}><span class="nav-button-dot" aria-hidden="true"><i></i></span>{item.label}</a>
+    ))}
+    <a class:list={{ active: active === "monitoreo" }} href={SITE.monitoringHref} aria-current={active === "monitoreo" ? "page" : undefined}>
+      <span class="nav-button-dot" aria-hidden="true"><i></i></span>Monitoreo remoto
+    </a>
+  </nav>
   <div class="header-floor-display" role="img" aria-label={floorLabel}>
     <span class="header-floor-arrow" aria-hidden="true">
       <span class="header-floor-arrow-track">
@@ -57,12 +65,4 @@ const matrixCharacters: Record<string, string[]> = {
       ))}
     </span>
   </div>
-  <nav aria-label="Navegación principal">
-    {navigation.map((item) => (
-      <a class:list={{ active: active === item.id }} href={item.href}>{item.label}</a>
-    ))}
-  </nav>
-  <a class:list={["header-contact", { active: active === "monitoreo" }]} href={SITE.monitoringHref} aria-current={active === "monitoreo" ? "page" : undefined}>
-    Monitoreo remoto <span aria-hidden="true">↗</span>
-  </a>
 </header>
