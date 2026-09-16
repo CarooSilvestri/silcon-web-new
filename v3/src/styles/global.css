@@ -52,7 +52,8 @@ h1 em{font-family:Georgia,serif;font-weight:400}
 .lead{max-width:680px;font-size:clamp(1.25rem,2vw,1.8rem);line-height:1.5}
 .about-elevator{grid-column:2;align-self:start;justify-self:end;position:relative;width:min(100%,340px);margin:0;padding:2rem 0 0}
 .about-elevator>span{position:absolute;top:0;right:0;color:var(--red);font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em}
-.about-elevator img{display:block;width:100%;aspect-ratio:2/3;object-fit:cover;filter:saturate(.72)}
+.about-elevator-image{display:grid;place-items:center;min-height:520px;padding:1.5rem;background:#e8e6df;overflow:hidden}
+.about-elevator img{display:block;width:auto;max-width:100%;height:auto;max-height:490px;object-fit:contain;filter:saturate(.78) contrast(.96)}
 .about-elevator figcaption{margin-top:1rem;font-size:.62rem;text-transform:uppercase;letter-spacing:.12em}
 .about-story{grid-column:1;grid-row:2;align-self:start;color:var(--muted);font-size:1rem;line-height:1.65}
 .story-opening{max-width:760px;color:var(--ink);font-size:clamp(1.2rem,1.8vw,1.65rem);line-height:1.5}
@@ -128,6 +129,7 @@ h1 span:last-child{width:fit-content;padding-right:.04em;font-size:.82em;line-he
 .story-columns{grid-template-columns:1fr;gap:0;margin-top:2rem}
 .about-story strong{padding:1.5rem 0 0 1.25rem}
 .about-elevator{width:min(100%,300px);justify-self:center}
+.about-elevator-image{min-height:450px}
 .principles{grid-template-columns:1fr}
 .principles p{min-height:132px;padding:2rem var(--page-gutter)}
 footer{padding:2rem var(--page-gutter) 1rem}
